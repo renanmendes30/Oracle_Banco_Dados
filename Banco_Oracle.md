@@ -17,7 +17,7 @@ Public Acess
 
 ## 1. Acesso ao Servidor
 ```
-ssh -i C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key opc@168.138.132.252
+ssh -i C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key ubuntu@168.138.132.252
 ```
 Se ocorrer erro de permissões, execute no PowerShell:
 ```
@@ -45,16 +45,20 @@ FLUSH PRIVILEGES;
 ```
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 bind-address = 0.0.0.0
-sudo systemctl restart mysql
 ```
 ## 5. Firewall
 ```
+sudo apt install ufw
+sudo ufw enable
 sudo ufw allow 3306/tcp
 sudo ufw reload
 ```
 ```
 sudo apt-get install iptables-persistent
 sudo iptables -I INPUT 5 -p tcp --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+```
+```
+sudo systemctl restart mysql
 ```
 
 ## 6. Liberando porta 3306 na Oracle Cloud
