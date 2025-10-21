@@ -1,71 +1,42 @@
-# 🚀 Tutorial de Conexão SSH e Instalação do Node-RED no Oracle Cloud
+# Configuração do Banco de Dados MySQL na Oracle Cloud + Integração com Node-RED
 
-## 🧩 1. Conectar ao Servidor Oracle Cloud
-```bash
-ssh -i C:\Users\renan\Downloads\ssh-key-2025-10-10.key ubuntu@136.248.115.35
+## 1. Acesso ao Servidor
+```
+ssh -i C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key opc@168.138.132.252
+```
+Se ocorrer erro de permissões, execute no PowerShell:
+```
+icacls "C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key" /inheritance:r
+icacls "C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key" /grant:r "%USERNAME%:R"
 ```
 
-> Se aparecer `Permission denied (publickey)`:
-1. Corrigir permissões no PowerShell:
-```bash
-icacls "C:\Users\renan\Downloads\ssh-key-2025-10-10.key" /inheritance:r
-icacls "C:\Users\renan\Downloads\ssh-key-2025-10-10.key" /grant:r "renan:R"
+## 2. Instalação do MySQL Server
 ```
-2. Tentar novamente o comando SSH acima.
-
----
-
-## ⚙️ 2. Remover Instalação Antiga do Node-RED
-```bash
-sudo rm -rf ~/.node-red
-sudo rm -rf /home/ubuntu/.nvm/versions/node/*/lib/node_modules/node-red
-sudo npm cache clean --force
+sudo apt update
+sudo apt install mysql-server -y
+sudo systemctl enable mysql
+sudo systemctl start mysql
 ```
-
----
-
-## 📦 3. Reinstalar o Node-RED
-```bash
-sudo npm install -g --unsafe-perm node-red
+## 3. Criação do Usuário e Permissões
 ```
-
-Verifique se funcionou:
-```bash
-node-red
+sudo mysql -u root
 ```
-
-Acesse no navegador:  
-👉 [http://127.0.0.1:1880/](http://127.0.0.1:1880/)
-
----
-
-## 🌐 4. Acessar de Qualquer Máquina
-Edite o arquivo `settings.js` (geralmente em `~/.node-red/settings.js`):
-
-Procure e altere:
-```js
-uiHost: "0.0.0.0",
-uiPort: 1880,
 ```
-Depois reinicie:
-```bash
-node-red-stop
-node-red-start
+CREATE USER 'diretor'@'%' IDENTIFIED BY 'BRKM7480';
+GRANT ALL PRIVILEGES ON *.* TO 'diretor'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+## 4. Acesso Remoto
+```
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+bind-address = 0.0.0.0
+sudo systemctl restart mysql
+```
+## 5. Firewall
+```
+sudo ufw allow 3306/tcp
+sudo ufw reload
 ```
 
-No navegador de qualquer PC:  
-👉 `http://<IP_PÚBLICO>:1880`  
-Exemplo: [http://136.248.115.35:1880](http://136.248.115.35:1880)
-
----
-
-## 🪪 5. Dica Extra – Rodar em Segundo Plano
-```bash
-node-red-start &
-```
-
----
-
-## 🧠 Autor
 **Renan Mendes**  
 Guia técnico para conexão e automação no Oracle Cloud com Node-RED.
