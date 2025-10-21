@@ -52,6 +52,11 @@ sudo systemctl restart mysql
 sudo ufw allow 3306/tcp
 sudo ufw reload
 ```
+```
+sudo apt-get install iptables-persistent
+sudo iptables -I INPUT 5 -p tcp --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+```
+
 ## 6. Liberando porta 3306 na Oracle Cloud
 
 No Oracle Cloud Console:
