@@ -23,6 +23,8 @@ Se ocorrer erro de permissões, execute no PowerShell:
 ```
 icacls "C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key" /inheritance:r
 icacls "C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key" /grant:r "%USERNAME%:R"
+icacls "C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key" /remove "Users"
+icacls "C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key" /remove "Administrators
 ```
 
 ## 2. Instalação do MySQL Server
