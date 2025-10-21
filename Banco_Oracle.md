@@ -37,6 +37,12 @@ sudo systemctl restart mysql
 sudo ufw allow 3306/tcp
 sudo ufw reload
 ```
+## 6. Liberando porta 3306 na Oracle Cloud
 
-**Renan Mendes**  
-Guia técnico para conexão e automação no Oracle Cloud com Node-RED.
+No Oracle Cloud Console:
+Vá em Networking → Virtual Cloud Networks (VCNs)
+Acesse sua sub-rede (Subnet) → clique na Security List associada
+Clique em Add Ingress Rule
+Source CIDR: 177.181.6.159/32 (ou seu IP público)
+Destination Port Range: 3306
+Protocol: TCP
