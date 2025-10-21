@@ -1,5 +1,20 @@
 # Configuração do Banco de Dados MySQL na Oracle Cloud + Integração com Node-RED
 
+## Virtual Cloud Network
+
+IPv4 CIDR Block
+```
+10.0.0.0/16
+```
+
+## SUBNETs
+
+IPv4 CIDR Block
+```
+10.0.2.0/24
+```
+Public Acess
+
 ## 1. Acesso ao Servidor
 ```
 ssh -i C:\Users\renan\Downloads\Oracle\ssh-key-2025-10-078.key opc@168.138.132.252
@@ -46,3 +61,8 @@ Clique em Add Ingress Rule
 Source CIDR: 177.181.6.159/32 (ou seu IP público)
 Destination Port Range: 3306
 Protocol: TCP
+
+## NODE-RED
+
+msg.topic = "INSERT INTO usuarios (nome, email, idade) VALUES ('Renan', 'renan@email.com', 25)";
+return msg;
